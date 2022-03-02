@@ -189,7 +189,10 @@ div.csl-indent {
 <h5>Data</h5>
 <p>The showcase uses a time-series of <span class="math inline">\(6\)</span> <em>NDVI</em> images. <em>NDVI</em> stands for <em>Normalized Difference Vegetation Index</em> and it is an indicator of vegetation’s vigor. Values close to <span class="math inline">\(1\)</span> indicate the presence of green and dense vegetation. Images correspond to a region in norther Spain between August <span class="math inline">\(2^{nd}\)</span> and <span class="math inline">\(4^{th}\)</span>, in <span class="math inline">\(2017\)</span> and <span class="math inline">\(2018\)</span>. The images are part of the package and can be loaded into the environment as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsat)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ex.ndvi.navarre&quot;</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ex.ndvi.navarre&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ex.ndvi.navarre <span class="ot">&lt;-</span> <span class="fu">rast</span>(ex.ndvi.navarre)</span></code></pre></div>
 <p>Let’s display the series of images to spot the gaps of data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ex.ndvi.navarre) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cont&quot;</span>)</span></code></pre></div>
@@ -211,7 +214,7 @@ div.csl-indent {
 <p>Let’s make a comparison between <em>before</em> and <em>after</em> the application of <em>IMA.</em></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> ex.ndvi.navarre[[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> ndvi.fill[[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(<span class="fu">stack</span>(before,after)) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cont&quot;</span>)</span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(<span class="fu">c</span>(before,after)) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">title =</span> <span class="st">&quot;NDVI&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cont&quot;</span>)</span></code></pre></div>
 <p>The intention is to keep growing the number of algorithms devoted to processing in future versions of the package.</p>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-militino2019interpolation" class="csl-entry">

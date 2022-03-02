@@ -25,12 +25,18 @@ the value of called order
 Get the slot called order from a \code{records} or an \code{rtoi}
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 # get the records
 rcds <- records(navarre)
 
 # gets a boolean
 get_order(rcds)
+}
 }

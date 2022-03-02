@@ -20,12 +20,19 @@ returns a data frame, normally with all row names
 Functions to check if an object is a data frame, or coerce it if possible.
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
+
 # get the records
 rcds <- records(navarre)
 # coerce the records to rtoi
 df <- as.data.frame(rcds)
 # print the dataframe
 print(df)
+}
 }

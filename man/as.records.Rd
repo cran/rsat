@@ -21,8 +21,14 @@ returns a records objects with the columns values in \code{x}
 Create records object from data frame
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
+
 # get the records
 rcds <- records(navarre)
 # coerce the records to dataframr
@@ -34,4 +40,5 @@ print(df)
 rcds2 <- as.records(df)
 # check the conversion
 identical(rcds,rcds2)
+}
 }

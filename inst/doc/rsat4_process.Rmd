@@ -44,7 +44,10 @@ The showcase uses a time-series of $6$ *NDVI* images. *NDVI* stands for *Normali
 
 ```{r advanced_ima_data}
 library(rsat)
+library(terra)
+
 data("ex.ndvi.navarre")
+ex.ndvi.navarre <- rast(ex.ndvi.navarre)
 ```
 
 Let's display the series of images to spot the gaps of data:
@@ -79,7 +82,7 @@ Let's make a comparison between *before* and *after* the application of *IMA.*
 ```{r advanced_ima_result}
 before <- ex.ndvi.navarre[[1:3]]
 after <- ndvi.fill[[1:3]]
-tm_shape(stack(before,after)) + tm_raster(title = "NDVI", style = "cont")
+tm_shape(c(before,after)) + tm_raster(title = "NDVI", style = "cont")
 ```
 
 The intention is to keep growing the number of algorithms devoted to processing in future versions of the package.

@@ -27,8 +27,13 @@ all the names in \code{x}.
 A function to get or set the names of an object.
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 names(navarre)
 names(navarre) <- "New name"
@@ -37,4 +42,5 @@ names(navarre)
 rcrds <- records(navarre)
 
 names(rcrds)
+}
 }

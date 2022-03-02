@@ -32,7 +32,7 @@
 #'
 #' @references \insertRef{militino2019interpolation}{rsat}
 #'
-#' @param x \code{rtoi}, \code{RastespatRaster} or \code{RasterBrick} containing
+#' @param x \code{rtoi} or \code{RastespatRaster} containing
 #' a time series of satellite images.
 #' @param method character argument. Defines the method used
 #' for processing the images, e.a. "IMA".
@@ -92,6 +92,7 @@
 #' @importFrom terra add<- values ncell app interpolate
 #' @importFrom Rdpack reprompt
 #' @examples
+#' \dontrun{
 #' ## Smooth data in rtoi
 #' library(rsat)
 #' require(terra)
@@ -139,6 +140,7 @@
 #'   ex.ndvi.navarre[[2]], tiles.mod.ndvi.filled[[2]]
 #' )
 #' plot(tiles.mod.ndvi.comp)
+#' }
 setGeneric("rsat_smoothing_images", function(x,
                                         method,
                                         ...) {

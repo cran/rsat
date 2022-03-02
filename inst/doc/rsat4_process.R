@@ -7,7 +7,10 @@ knitr::opts_chunk$set(
 
 ## ----advanced_ima_data--------------------------------------------------------
 #  library(rsat)
+#  library(terra)
+#  
 #  data("ex.ndvi.navarre")
+#  ex.ndvi.navarre <- rast(ex.ndvi.navarre)
 
 ## ----advanced_ima_show--------------------------------------------------------
 #  library(tmap)
@@ -27,5 +30,5 @@ knitr::opts_chunk$set(
 ## ----advanced_ima_result------------------------------------------------------
 #  before <- ex.ndvi.navarre[[1:3]]
 #  after <- ndvi.fill[[1:3]]
-#  tm_shape(stack(before,after)) + tm_raster(title = "NDVI", style = "cont")
+#  tm_shape(c(before,after)) + tm_raster(title = "NDVI", style = "cont")
 

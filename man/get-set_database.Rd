@@ -39,8 +39,13 @@ If both, environment and rtoi database are defined the rtoi
 database is used.
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 # get the databse used by navarre
 get_database(navarre)
@@ -53,4 +58,5 @@ get_database()
 
 # set the a new database path for the entire environment
 set_database("new_path")
+}
 }

@@ -18,8 +18,13 @@ It returns a \code{records} like \code{x} but with duplicate
 elements/rows removed.
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 # get the records
 rcds <- records(navarre)
@@ -30,4 +35,5 @@ print(duplicate.records)
 single.record <- unique(duplicate.records)
 length(single.record)
 print(single.record)
+}
 }

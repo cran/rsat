@@ -26,6 +26,7 @@
 #' @include records.R
 #'
 #' @examples
+#' \dontrun{
 #' data(ex.navarre)
 #' ## Create an rtoi with database
 #' # path where the region is stored
@@ -50,6 +51,7 @@
 #' )
 #'
 #' print(navarre2)
+#' }
 setRefClass("rtoi",
   # Define the slots
   fields = list(
@@ -206,6 +208,8 @@ setMethod(
   }
 )
 
+#' @param x .
+#'
 #' @rdname get_dir
 #' @aliases get_dir,rtoi
 setMethod(
@@ -217,13 +221,7 @@ setMethod(
 )
 
 
-#' @rdname get_dir
-#' @export
-#' @aliases get_dir,rtoi,character-generic
 setGeneric("get_dir<-", function(x, value) standardGeneric("get_dir<-"))
-
-#' @rdname get_dir
-#' @aliases get_dir,rtoi,character-method
 setMethod(
   "get_dir<-",
   signature(x = "rtoi", value = "character"),
@@ -233,7 +231,6 @@ setMethod(
     return(x)
   }
 )
-
 
 setGeneric("get_var_dir", function(x, p) standardGeneric("get_var_dir"))
 setMethod(
@@ -271,7 +268,12 @@ setMethod("get_mosaic_dir",
 #' \dontrun{
 #' library(rsat)
 #' # load example rtoi
-#' pamplona.derived <- read_rtoi(system.file("ex/PamplonaDerived",package="rsat"))
+#' file.copy(from=system.file("ex/PamplonaDerived",package="rsat"),
+#'          to=tempdir(),
+#'          recursive = TRUE)
+#'
+#' # load example rtoi
+#' pamplona.derived <- read_rtoi(file.path(tempdir(),"PamplonaDerived"))
 #'
 #' # print available variables
 #' rsat_list_data(pamplona.derived)
@@ -413,8 +415,13 @@ get_processed_files<-  function(x, p, v, s, ...) {
 #' @export
 #' @rdname get-set_database
 #' @examples
+#' \dontrun{
 #' # load example rtoi
-#' navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+#' file.copy(from=system.file("ex/Navarre",package="rsat"),
+#'          to=tempdir(),
+#'          recursive = TRUE)
+#'
+#' navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 #'
 #' # get the databse used by navarre
 #' get_database(navarre)
@@ -427,6 +434,7 @@ get_processed_files<-  function(x, p, v, s, ...) {
 #'
 #' # set the a new database path for the entire environment
 #' set_database("new_path")
+#' }
 setGeneric("get_database", function(x) standardGeneric("get_database"))
 
 #' @rdname get-set_database
@@ -483,6 +491,7 @@ setMethod(
 #' @return the sf class with the region of an rtoi
 #' @export
 #' @examples
+#' \dontrun{
 #' library(rsat)
 #' # create a copy of navarre
 #' file.copy(from=system.file("ex/Navarre",package="rsat"),
@@ -500,6 +509,7 @@ setMethod(
 #' region(navarre)<-NULL
 #'
 #' region(navarre)<-sf.obj
+#' }
 setGeneric("region", function(x) {
   standardGeneric("region")
 })
@@ -549,6 +559,7 @@ setMethod(
 #' @return a set of records in x rtoi
 #' @export
 #' @examples
+#' \dontrun{
 #' #' library(rsat)
 #' # create a copy of navarre
 #' file.copy(from=system.file("ex/Navarre",package="rsat"),
@@ -566,6 +577,7 @@ setMethod(
 #' records(navarre) <- rcrds
 #' print(navarre)
 #' unlink(file.path(tempdir(),"Navarre"),recursive=TRUE)
+#' }
 setGeneric("records", function(x) {
   standardGeneric("records")
 })
@@ -689,7 +701,11 @@ setMethod(
 #' library(rsat)
 #'
 #' # load example rtoi
-#' navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+#' file.copy(from=system.file("ex/Navarre",package="rsat"),
+#'          to=tempdir(),
+#'          recursive = TRUE)
+#'
+#' navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 #'
 #' print(navarre)
 #'
@@ -790,11 +806,17 @@ setMethod("write_rtoi",
 #' @return rtoi object readed from disk.
 #' @export
 #' @examples
+#' \dontrun{
 #' library(rsat)
 #'
 #' # load example rtoi
-#' navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+#' file.copy(from=system.file("ex/Navarre",package="rsat"),
+#'          to=tempdir(),
+#'          recursive = TRUE)
+#'
+#' navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 #' print(navarre)
+#' }
 setGeneric("read_rtoi", function(path, ...) {
   standardGeneric("read_rtoi")
 })

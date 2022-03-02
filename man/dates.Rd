@@ -30,8 +30,13 @@ returns a vector of \code{Date} class
 Get/set the dates from a \code{records} or an \code{rtoi}
 }
 \examples{
+\dontrun{
 # load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 # get a vector of dates includes in rtoi
 dates(navarre)
@@ -41,4 +46,5 @@ rcds <- records(navarre)
 
 # coerce the records to dataframr
 dates(rcds)
+}
 }

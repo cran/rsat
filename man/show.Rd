@@ -31,8 +31,13 @@ function exists to be specialized by methods.
 The default method calls showDefault.
 }
 \examples{
+\dontrun{
 ## load example rtoi
-navarre <- read_rtoi(system.file("ex/Navarre",package="rsat"))
+file.copy(from=system.file("ex/Navarre",package="rsat"),
+         to=tempdir(),
+         recursive = TRUE)
+
+navarre <- read_rtoi(file.path(tempdir(),"Navarre"))
 
 ## The method will now be used for automatic printing of navarre
 navarre
@@ -41,4 +46,5 @@ navarre
 rcds <- records(navarre)
 
 rcds
+}
 }

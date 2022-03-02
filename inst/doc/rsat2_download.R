@@ -19,8 +19,8 @@ knitr::opts_chunk$set(
 #  toi <- seq(as.Date("2021-01-10"),as.Date("2021-01-15"),1)
 
 ## -----------------------------------------------------------------------------
-#  db.path <- "C:/database"
-#  ds.path <- "C:/datasets"
+#  db.path <- file.path(tempdir(),"database")
+#  ds.path <- file.path(tempdir(),"datasets")
 #  dir.create(db.path)
 #  dir.create(ds.path)
 

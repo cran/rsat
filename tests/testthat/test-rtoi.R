@@ -21,7 +21,7 @@ test_that("records test", {
     print(e)
   })
 
-
+  tryCatch({
   navarre <- read_rtoi(file.path(rtoi.path,"Navarre_rtoi"))
 
   #######################################################
@@ -54,24 +54,25 @@ test_that("records test", {
 
   print(navarre)
   navarre
+
   plot(navarre,"preview")
   plot(navarre,"dates")
 
 
   set_database(navarre,get_database(navarre))
   region(navarre)<-region(navarre)
-  rename(navarre,names(navarre))
+  #rename(navarre,names(navarre))
   dates(navarre)
   product(navarre)
   sat_name(navarre)
 
-  tryCatch({
+
     plot(navarre,"view")
+
+
+    rsat_preview(navarre,dates(navarre)[2])
   }, error = function(e) {
     print(e)
   })
-
-  rsat_preview(navarre,dates(navarre)[2])
-
-  unlink(file.path(rtoi.path,"Navarre_rtoi"),recursive = T)
+  #unlink(file.path(rtoi.path,"Navarre_rtoi"),recursive = T)
 })
