@@ -11,10 +11,10 @@
 #' return a single element. For instance, the Normalized Difference Snow
 #' Index would be;
 #'
-#' NDSI = function(green, swir1){
-#' ndsi <- (green - swir1)/(green + swir1)
-#' return(ndsi)
-#' }
+#' NDSI = function(green, swir1)\{
+#'   ndsi <- (green - swir1)/(green + swir1)
+#'   return(ndsi)
+#' \}
 #'
 #' @param x an \code{rtoi} as the source of images.
 #' @param product the name of the product from which the index is computed.
@@ -54,8 +54,8 @@
 #'
 #' # ad-hoc variable
 #' NDSI = function(green, swir1){
-#' ndsi <- (green - swir1)/(green + swir1)
-#' return(ndsi)
+#'   ndsi <- (green - swir1)/(green + swir1)
+#'   return(ndsi)
 #' }
 #' rsat_derive(pamplona, "NDSI", product = "mod09ga",fun=NDSI)
 #' # now NDVI is processed
@@ -131,7 +131,7 @@ setMethod("rsat_derive",
 
       for (size in additional.sizes) {
         file.name <- paste0(variable, "_",
-                            format(genGetDates(i), "%Y%j"),
+                            format(genGetDates(basename(i)), "%Y%j"),
                             size,
                             ".tif")
         out.file <- file.path(out.dir, file.name)
@@ -249,12 +249,26 @@ deriveVariables <- function(bands,
       band <- layers[grepl(band, layers, ignore.case = TRUE)]
     }
     if (length(band) == 0) {
-      if (verbose) warning(paste0("Error reading band ", arg))
-      next
+      if (verbose) message(paste0("Error reading band ", arg))
+      return(result)
     }
     band <- gsub("\\", "/", band, fixed = TRUE)
     if (verbose) message(paste0("Reading band: ",
                                 paste0(arg, "<-rast('", band, "')")))
+
+
+    #Check if band filename contains .xml for compatibility with opening in qgis
+    xmls <- band[endsWith(band, ".xml")]
+    if (verbose && length(xmls) > 0) message(paste0("Ignoring file: ", xmls))
+
+    band <- band[!endsWith(band, ".xml")]
+
+    if (length(band) == 0) {
+      if (verbose) message(paste0("No valid band: ", xmls))
+      next
+    }
+
+
     # eval(parse( text=paste0(arg, "<-read_stars('",
     #                         band,
     #                         "',normalize_path = FALSE)")))
@@ -280,7 +294,8 @@ deriveVariables <- function(bands,
     },
     error = function(e) {
       if (verbose) {
-        message(e)
+        message(paste0("Error: ", e))
+        message(paste0("Function: ", funString))
         message(paste0("Band not found for image ",
                        i,
                        ". Check the mosaic of this image."))

@@ -16,6 +16,7 @@
 #' images with the same name.
 #' @param warp character. If equal to "extent", it also crops the images
 #' around the \code{rtoi}. Use "" otherwise.
+#' @param verbose boolean. If TRUE show verbose output. Default FALSE
 #' @param ... additional arguments.
 #' @return nothing. Mosaics the downloaded images and stored them on the hard disk
 #' @importFrom terra rast
@@ -99,10 +100,11 @@ setMethod(
   function(x,
            out_path,
            db_path,
-           bfilter,
+           bfilter = c(),
            warp = "extent",
            region,
            overwrite = FALSE,
+           verbose = FALSE,
            ...) {
     args <- list(...)
     if ("dates" %in% names(args)) {
@@ -177,6 +179,11 @@ setMethod(
       ######################################
       message(paste0("Mosaicking bands for period ", d))
       for (bnds in bands) {
+        #Use bfilter list to choose which bands to process,
+        #if the band is not in the list jump to the next one
+        if(length(bfilter) != 0 & !(bnds %in% bfilter)){
+          next
+        }
         chunks <- filterchunks(allfiles, bnds)
         if (length(chunks) > 0) {
           bname <- gsub(":", "_", bnds)
@@ -195,7 +202,8 @@ setMethod(
             typechunks = chunks,
             temp = tmpfile,
             nodata = defineNodata(chunks, bnds),
-            out.name = cmpfile
+            out.name = cmpfile,
+            verbose = verbose
           )
 
           tryCatch(
@@ -219,7 +227,8 @@ setMethod(
                     options = c(
                       "-te", ext$xmin, ext$ymin, ext$xmax, ext$ymax,
                       "-te_srs", st_crs(region)$proj4string
-                    )
+                    ),
+                    quiet = !verbose
                   )
 
                   gc()

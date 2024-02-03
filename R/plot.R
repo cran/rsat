@@ -225,8 +225,8 @@ setMethod(
       #  'product'
       # ))
       return(calendR(
-        start_date = min(date), # Custom start date
-        end_date = max(date),
+        from = min(date), # Custom start date
+        to = max(date),
         special.days = n.product,
         special.col = c("pink",
                         "lightblue",
@@ -403,7 +403,7 @@ setMethod(
         if (verbose) message(paste0("Preview downloaded: ", pre.file))
         if (!file.exists(pre.file)) {
           con <- connection$getApi(get_api_name(r))
-          con$pictureDownload(p.url, pre.file)
+          con$file_download(p.url, pre.file)
         }
         img <- suppressWarnings(rast(pre.file))
         ext(img) <- ext(r)
@@ -503,8 +503,14 @@ read_rgb <- function(files.p,
   green[[1]] <- as.matrix(stretch(rast(green[[1]])))
   blue[[1]] <- as.matrix(stretch(rast(blue[[1]])))
 
+  red[[1]] <- as.matrix(stretch(rast(red[[1]])))
+  green[[1]] <- as.matrix(stretch(rast(green[[1]])))
+  blue[[1]] <- as.matrix(stretch(rast(blue[[1]])))
   aux <- merge(c(red, green, blue))
+
   # aux<-as(aux,"Raster")
+  #aux<-c(red, green, blue)
+  #aux<-as(aux,"Raster")
   names(aux) <- paste0(product, "_", date)
   return(aux)
 }

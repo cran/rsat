@@ -16,10 +16,11 @@ rsat_mosaic(x, ...)
   x,
   out_path,
   db_path,
-  bfilter,
+  bfilter = c(),
   warp = "extent",
   region,
   overwrite = FALSE,
+  verbose = FALSE,
   ...
 )
 }
@@ -44,6 +45,8 @@ By default, the path is defined by \code{x}.}
 
 \item{overwrite}{logical argument. If \code{TRUE}, overwrites the existing
 images with the same name.}
+
+\item{verbose}{boolean. If TRUE show verbose output. Default FALSE}
 }
 \value{
 nothing. Mosaics the downloaded images and stored them on the hard disk
